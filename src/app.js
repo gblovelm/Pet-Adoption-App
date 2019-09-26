@@ -1,23 +1,22 @@
-const Pet = () => {
-    return React.createElement("div", {}, [
-        React.createElement("h1", {}, "Luna"),
-        React.createElement("h2", {}, "Dog"),
-        React.createElement("h2", {}, "Havanese")
-    ]);
+import React from "react";
+import { render } from "react-dom";
+import Pet from "./Pet";
+
+// throw new Error("lol");   // useful to use at various places in the code to check its being loaded
+// a React Component. Returns result of React.createElement
+const App = () => {
+  return (
+    <div>
+      <h1 id="something-important">Adopt Me!</h1>
+      <Pet name="Luna" animal="Dog" breed="Havanese" />
+      <Pet name="Pepper" animal="Bird" breed="Cockatiel" />
+      <Pet name="Doink" animal="Cat" breed="Mixed" />
+    </div>
+  );
 };
 
-const App = () => {  // a React Component. Returns result of React.createElement
-    return React.createElement("div", { id: "something-important" },
-        [ 
-            React.createElement("h1", {}, "Adopt Me!"),
-            React.createElement(Pet, { name: "Luna", animal: "Dog", breed: "Havanese"}),
-            React.createElement(Pet, { name: "Luna", animal: "Dog", breed: "Havanese"}),
-            React.createElement(Pet, { name: "Luna", animal: "Dog", breed: "Havanese"}),
-        ]
-    );
-};
-
-ReactDOM.render(
-    React.createElement(App),       // this stamps our app weve created
-    document.getElementById("root")  // where to render it - see above
+render(
+  // overwrites "not rendered" in the original HTML
+  <App />, // this stamps the app
+  document.getElementById("root") // where to render it - see above
 );
