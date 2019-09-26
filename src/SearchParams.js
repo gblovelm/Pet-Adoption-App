@@ -1,0 +1,60 @@
+import React, { useState, useEffect } from "react";
+import pet, { ANIMALS } from "@frontendmasters/pet";
+import Results from "./Results";
+import useDropdown from "./useDropdown";
+
+const SearchParams = () => {
+  const [location, setLocation] = useState("Seattle, WA"); // defaults to Seattle
+  const [breeds, setBreeds] = useState([]);
+  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
+  const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
+  const [pets, setPets] = useState([]);
+
+  async function requestPets() {
+    const { animals } = await pet.animals({
+      location,
+      breed,
+      type: animal
+    });
+    // request resolved by here.
+    setPets(animals || []); // expect back animals from API, else if nothing then []
+  }
+
+  useEffect(() => {
+    //pet.breeds("dog").then(console.log, console.error); // for testing
+    setBreeds([]);
+    setBreed("");
+
+    pet.breeds(animal).then(({ breeds }) => {
+      const breedStrings = breeds.map(({ name }) => name);
+      setBreeds(breedStrings);
+    }, console.error);
+  }, [animal, setBreed, setBreeds]);
+
+  return (
+    <div className="search-params">
+      <form
+        onSubmit={event => {
+          event.preventDefault(); // stops it from submitting a HTML post form
+          requestPets();
+        }}
+      >
+        <label htmlFor="location">
+          Location
+          <input
+            id="location"
+            value={location}
+            placeholder="Location"
+            onChange={event => setLocation(event.target.value)}
+          />
+        </label>
+        <AnimalDropdown />
+        <BreedDropdown />
+        <button>Submit</button>
+      </form>
+      <Results pets={pets} />
+    </div>
+  );
+};
+
+export default SearchParams;
