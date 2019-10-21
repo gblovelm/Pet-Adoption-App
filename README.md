@@ -28,21 +28,21 @@ http://localhost:1234
 
 
 # Design Notes
-JSX is used to improve readability. JSX translates HTML tags into *React.createElement* calls and is normally used in React apps.
-The app makes asynchronous requests for data from the [Petfinder API][API] using the __useEffect__ React hook. Locations are limited to Seattle, WA and San Francisco, CA in the current version. React Router is used to switch between the two pages of the app - Results and Details. 
+JSX is used to improve readability. JSX translates HTML tags into *React.createElement* calls.
+The app makes asynchronous requests for data from the [Petfinder API][API] using the __useEffect__ React hook. Locations are limited to Seattle, WA and San Francisco, CA in the current version. React Router is used to switch between the two pages of the app - Results and Details. Context is used to enable a site theme to be maintained across different pages as state is effectively global (at the application level) rather than confined to just a component.
 
 __index.html__  top level webpage with a root div and a modal div for the React application  
 __App.js__      top level file for the React application.   
 __Results.js__  Results page. Formats the data returned from a request to the API.  
 __Details.js__  Details page. Modal window opened on button click event.   
 __useDropDown.js__  is a custom React hook designed to be a reusable as a stateful dropdown.    
-__SearchParams.js__     
-__Pet.js__    
+__SearchParams.js__ component that provides a searchbox to enable searching for different facets of pets against the PetFinder API   
+__Pet.js__  component to enable renering of a pet  
 __Modal.js__  code for the modal window    
-__Carousel.js__    
-__ErrorBoundary.js__    
-__ThemeContext.js__    
-__useDropDown.js__   
+__Carousel.js__  Carousel component  
+__ErrorBoundary.js__ controls error handling for data coming from the PetFinder API   
+__ThemeContext.js__ makes a theme for the app using Context  
+__useDropDown.js__ reusable dropdown component that handles all the setting and unsetting of the state.
      
 # Tooling
 __npm__:      Package manager for node   
